@@ -1,0 +1,33 @@
+# @package _global_
+# Default Hydra config — composes model + data + trainer sub-configs.
+# Override individual groups on the command line, e.g.:
+#   python train.py model=agnn_large data=max2sat_100v
+
+defaults:
+  - model: agnn_wide     # conf/model/agnn.yaml
+  - data: max2sat        # conf/data/max2sat.yaml
+  - trainer: default     # conf/trainer/default.yaml
+  - wandb: default       # conf/wandb/default.yaml
+  - _self_               # values below override group defaults
+
+# ── task ──────────────────────────────────────────────────────────────────────
+task: maxsat
+
+# ── loss ──────────────────────────────────────────────────────────────────────
+# 'ce' : cross-entropy loss
+loss_type: ce
+
+# ── reproducibility ───────────────────────────────────────────────────────────
+seed: 42
+
+# ── checkpoint to resume from (null = start fresh) ───────────────────────────
+ckpt_path: null
+resume_weight_only: false
+
+# ── run modes ─────────────────────────────────────────────────────────────────
+do_train: true
+do_test: false
+do_valid_only: false
+
+# ── logging ───────────────────────────────────────────────────────────────────
+use_wandb: true

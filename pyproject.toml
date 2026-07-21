@@ -1,0 +1,71 @@
+[project]
+name = "D2CO-M"
+version = "0.1.0"
+description = "Accelerating Discrete Diffusion Models for Combinatorial Optimization via Momentum Inference"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+
+dependencies = [
+    # Pinned to 2.6.0 so the PyG cu124 wheels below match exactly
+    "torch==2.6.0",
+    "torchvision==0.21.0",
+    # PyG ecosystem — pre-built cu124 wheels fetched via find-links below.
+    # Versions include the local tag (+pt26cu124) to match the wheel filenames
+    # exactly; otherwise uv resolves the PyPI sdist which fails to build.
+    "torch-geometric",
+    "torch-sparse==0.6.18+pt26cu124",
+    "torch-scatter==2.1.2+pt26cu124",
+    # Data / utils
+    "pandas",
+    "matplotlib",
+    "tqdm",
+    "numpy",
+    # Config & training
+    "hydra-core",
+    "omegaconf",
+    "pytorch-lightning",
+    "argdantic",
+    "wandb",
+    "cnfgen",
+    "huggingface_hub",
+    "pybind11==2.2.4",
+    "setuptools",
+    # pyakmaxsat must be installed manually — its vendored pybind11 v2.2.4
+    # is incompatible with GCC 14 and newer CMake. Run after `uv sync`:
+    #   CMAKE_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5" CXXFLAGS="-include cstdint" pip install git+https://github.com/mullzhang/pyakmaxsat.git
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+# Only package the real Python source directories
+[tool.setuptools.packages.find]
+include = ["models*", "co_datasets*", "utils*"]
+
+# ── uv-specific settings ───────────────────────────────────────────────────────
+
+# Route torch and torchvision to the official PyTorch CUDA 12.4 wheel index
+[tool.uv.sources]
+torch = { index = "pytorch-cu124" }
+torchvision = { index = "pytorch-cu124" }
+
+# PyTorch CUDA 12.4 wheel index
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv]
+# PyG pre-built wheels for torch==2.6.0 + CUDA 12.4.
+# find-links points pip/uv at an HTML page of direct wheel URLs —
+# torch-sparse and torch-scatter wheels there are compiled for torch 2.6.0+cu124.
+find-links = [
+    "https://data.pyg.org/whl/torch-2.6.0+cu124.html",
+]
+# Still needed so uv doesn't try to compile them from source when it
+# can't find a matching wheel on PyPI proper.
+no-build-isolation-package = [
+    "torch-sparse",
+    "torch-scatter",
+]

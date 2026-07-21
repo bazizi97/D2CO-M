@@ -1,0 +1,43 @@
+# @package _global_
+
+# ── Denoiser architecture ──────────────────────────────────────────────────────
+model_type: exphormer    # 'gnn' | 'exphormer'
+
+n_layers: 8
+hidden_dim: 256
+n_nodes_features: 20     # vocab size (amino-acid tokens)
+n_edges_features: 400    # raw edge-attr dimension
+aggregation: sum
+sparse_factor: 1
+
+use_activation_checkpoint: false
+
+# Exphormer-specific
+n_heads: 8
+dropout: 0.1
+layer_norm: true
+batch_norm: false
+FFN: true
+use_bias: false
+residual: true
+expander_degree: 4
+n_vn: 1                  # virtual nodes per graph (0 = disabled)
+use_edge_features: true  # set false to ignore edge_attr
+activation: relu         # 'relu' | 'gelu' | 'silu' | 'glu'
+n_classes: 20            # output classes (20 amino-acids)
+
+# ── Diffusion ──────────────────────────────────────────────────────────────────
+diffusion_type: categorical
+diffusion_schedule: linear
+diffusion_steps: 1000
+inference_diffusion_steps: 50
+inference_schedule: linear
+inference_trick: ddim
+sequential_sampling: 1
+parallel_sampling: 1
+
+# ── Optimiser / scheduler ──────────────────────────────────────────────────────
+learning_rate: 1.0e-4
+weight_decay: 0.0
+lr_scheduler: constant
+fp16: false

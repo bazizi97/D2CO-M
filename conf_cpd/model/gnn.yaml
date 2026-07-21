@@ -1,0 +1,43 @@
+# @package _global_
+
+# ── Denoiser architecture ──────────────────────────────────────────────────────
+model_type: gnn          # 'gnn' | 'exphormer'
+
+n_layers: 12
+hidden_dim: 256
+n_nodes_features: 20
+n_edges_features: 400
+aggregation: sum
+sparse_factor: 1         # > 0 enables sparse mode in meta model
+
+use_activation_checkpoint: false
+
+# ── Diffusion ──────────────────────────────────────────────────────────────────
+diffusion_type: categorical
+diffusion_schedule: cosine
+diffusion_steps: 1000
+inference_diffusion_steps: 50
+inference_schedule: cosine
+inference_trick: ddim
+sequential_sampling: 1
+parallel_sampling: 1
+use_momentum_inference: false  # set true to use Adam-style momentum denoising at test/val time
+
+# ── Momentum inference hyper-parameters ───────────────────────────────────────
+# Adam-style logit accumulation:  m = a*m + b*d_logits
+#                                 v = (1-c)*v + c*||d_logits||^2
+#                                 logits += m / (sqrt(v) + epsilon)
+# a and b are L2-normalised internally so only their ratio matters.
+# Increase b (e.g. b=1.0, a=0.0) to trust the current step more at the expense
+# of accumulated momentum; decrease b for smoother, more conservative updates.
+momentum_a: 0.9        # momentum coefficient (before L2-normalisation)
+momentum_b: 0.01        # gradient  coefficient (before L2-normalisation)
+momentum_c: 0.99       # RMS coefficient
+momentum_epsilon: 1e-3 # Adam denominator floor
+momentum_init_noise: 0.01  # std of Gaussian noise added to initial logits to break symmetry
+
+# ── Optimiser / scheduler ──────────────────────────────────────────────────────
+learning_rate: 2.0e-4
+weight_decay: 1e-4
+lr_scheduler: cosine-decay   # 'constant' | 'cosine' | 'warmup_cosine'
+fp16: false

@@ -1,0 +1,12 @@
+# @package _global_
+# PyTorch Lightning Trainer settings
+
+num_epochs: 100
+learning_rate: 2.0e-4        # halved from 2e-4 — safer for sparse GNN gradients
+weight_decay: 1.0e-4
+lr_scheduler: cosine-decay  # cosine anneal from peak LR to 0 over all steps
+fp16: false
+
+# Early-stopping
+early_stop_patience: 10
+early_stop_delta: 1.0e-4

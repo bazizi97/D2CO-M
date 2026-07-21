@@ -1,0 +1,11 @@
+# @package _global_
+
+# ── Training loop ─────────────────────────────────────────────────────────────
+num_epochs: 100
+two_opt_iterations: 1000
+save_numpy_heatmap: false
+
+# ── Early stopping ────────────────────────────────────────────────────────────
+# Number of validation epochs with no improvement in val/NSR_masked before
+# training is stopped. Set to a large value (e.g. 9999) to disable.
+early_stop_patience: 10

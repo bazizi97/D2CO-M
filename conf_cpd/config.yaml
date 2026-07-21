@@ -1,0 +1,28 @@
+defaults:
+  - data: cfn          # selects conf/data/cfn.yaml
+  - model: gnn         # selects conf/model/gnn.yaml  (use 'exphormer' to switch)
+  - trainer: default   # selects conf/trainer/default.yaml
+  - _self_             # top-level keys below override composed defaults
+
+# ── Task ──────────────────────────────────────────────────────────────────────
+task: cfn
+
+# ── Experiment / Logging ──────────────────────────────────────────────────────
+use_wandb: false          # set to false to log locally with CSVLogger instead
+project_name: cfn_diffusion
+wandb_entity: null
+wandb_logger_name: null
+resume_id: null
+ckpt_path: null
+resume_weight_only: false
+
+# ── Run mode ──────────────────────────────────────────────────────────────────
+do_train: true
+do_test: false
+do_valid_only: false
+
+# ── NSR evolution plots ────────────────────────────────────────────────────────
+# If set, PNG + NPZ files from the test-time per-step masked-NSR tracking will
+# be written to this directory instead of <cwd>/nsr_evolution_plots/.
+# Leave as null to use the default location.
+nsr_plot_dir: null

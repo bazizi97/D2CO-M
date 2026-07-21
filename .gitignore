@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data & Datasets
+data/
+results_training/
+results_max2sat_data/
+results/
+*.pt
+*.cnf
+*.wcnf
+*.json
+
+# PyTorch Lightning & Weights & Biases
+lightning_logs/
+wandb/
+*.ckpt
+
+# Environment & IDE
+.env
+.venv/
+env/
+venv/
+.idea/
+.vscode/
+
+# Build and Distribution artifacts
+build/
+dist/
+*.egg-info/

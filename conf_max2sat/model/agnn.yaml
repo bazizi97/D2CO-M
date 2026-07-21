@@ -1,0 +1,30 @@
+# @package _global_
+# AGNN encoder config for standard categorical diffusion MAX2SAT
+
+# ── Encoder ───────────────────────────────────────────────────────────────────
+encoder: AGNN
+n_layers: 12
+hidden_dim: 256
+aggregation: sum
+sparse_factor: 1          # >0 enables sparse mode
+nodes_dim: 3              # INPUT_CLASSES: {0, 1, mask=2}
+edges_dim: 4
+use_activation_checkpoint: false
+
+# ── Diffusion ─────────────────────────────────────────────────────────────────
+diffusion_steps: 1000
+diffusion_schedule: cosine  # cosine noise schedule for CategoricalDiffusion
+vocab_size: 2              # OUTPUT_CLASSES: binary {0, 1}
+
+# ── Inference ─────────────────────────────────────────────────────────────────
+inference_diffusion_steps: 50
+inference_schedule: cosine
+sequential_sampling: 1
+parallel_sampling: 1
+
+# ── Momentum sampling ────────────────────────────────────────────────────────────────────
+use_momentum:    false     # true = use momentum sampler at test/inference time
+momentum_a:      0.9      # EMA coefficient for first moment  (velocity)
+momentum_b:      0.1      # logit-gradient contribution scale
+momentum_c:      0.01     # EMA coefficient for second moment (variance)
+momentum_epsilon: 1.0e-3  # numerical stability denominator

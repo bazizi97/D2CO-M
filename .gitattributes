@@ -1,0 +1,4 @@
+Models/wMax2Sat_model.ckpt filter=lfs diff=lfs merge=lfs -text
+Models/WMax2Sat_model.yaml filter=lfs diff=lfs merge=lfs -text
+Models/CPD_model.ckpt filter=lfs diff=lfs merge=lfs -text
+Models/CPD_model.yaml filter=lfs diff=lfs merge=lfs -text

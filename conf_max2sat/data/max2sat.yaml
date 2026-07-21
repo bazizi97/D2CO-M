@@ -1,0 +1,16 @@
+# @package _global_
+# Data paths and batch settings for MAX2SAT (sparse)
+
+# ── Paths ─────────────────────────────────────────────────────────────────────
+storage_path: ./results_max2sat_data/
+training_split: ./data/weighted_max2sat_data/train/
+validation_split: ./data/weighted_max2sat_data/valid/
+test_split: test
+training_split_label_dir: test
+
+# ── Batch sizes ───────────────────────────────────────────────────────────────
+batch_size: 128
+batch_size_test: 64
+batch_size_val: 64
+validation_examples: 300
+num_workers: 16

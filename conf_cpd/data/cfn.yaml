@@ -1,0 +1,13 @@
+# @package _global_
+
+# ── Dataset paths ─────────────────────────────────────────────────────────────
+storage_path: ./data/Ingraham_dataset_pr          # root directory for all data
+training_split: ./data/Ingraham_dataset_pr/train             # relative to storage_path (glob of *.pt files)
+training_split_label_dir: null    # optional label override directory
+validation_split: ./data/Ingraham_dataset_pr/validation_split
+test_split: ./data/Ingraham_dataset_pr/test
+
+# ── Loader ────────────────────────────────────────────────────────────────────
+batch_size: 8
+num_workers: 8
+validation_examples: 64

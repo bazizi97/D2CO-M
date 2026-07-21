@@ -1,0 +1,7 @@
+# @package _global_
+# Weights & Biases logging config
+
+project_name: ictai_paper
+wandb_entity: null              # set to your W&B username/org or leave null
+wandb_logger_name: d4_wmax2sar_linear
+resume_id: d4_wmax2sar_linear            # set to a W&B run ID to resume logging

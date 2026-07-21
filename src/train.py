@@ -63,7 +63,7 @@ def main(cfg: DictConfig) -> None:
     if task == "cfn":
         model_class = CFNSPARSEModel
         monitor_metric = getattr(args, "monitor_metric", "val/NSR")
-        early_stop_metric = getattr(args, "early_stop_metric", "val/NSR_masked")
+        early_stop_metric = getattr(args, "early_stop_metric", "val/NSR")
         saving_mode = getattr(args, "saving_mode", "max")
     elif task == "maxsat":
         model_class = MAX2SATModel

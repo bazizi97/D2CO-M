@@ -173,7 +173,6 @@ class CFNSPARSEModel(COMetaModel):
         best_masked_nsr = np.max(masked_nsr)
 
         metrics = {
-            f"{split}/NSR": best_solved_cost,
             f"{split}/Accuracy": best_acc,
         }
         self.outputs = [metrics]

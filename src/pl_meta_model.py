@@ -15,26 +15,22 @@ class COMetaModel(pl.LightningModule):
     def __init__(self, param_args, node_feature_only=True):
         super(COMetaModel, self).__init__()
         self.args = param_args
-        self.diffusion_type = self.args.diffusion_type
         self.diffusion_schedule = self.args.diffusion_schedule
         self.diffusion_steps = self.args.diffusion_steps
         self.sparse = self.args.sparse_factor > 0
 
-        if self.diffusion_type == "categorical":
-            out_channels = getattr(self.args, "num_classes", 2)
-            self.diffusion = CategoricalDiffusion(
-                T=self.diffusion_steps,
-                schedule=self.diffusion_schedule,
-                num_classes=out_channels,
-            )
-        else:
-            raise ValueError(f"Unknown diffusion type {self.diffusion_type}")
+        out_channels = getattr(self.args, "num_classes", 2)
+        self.diffusion = CategoricalDiffusion(
+            T=self.diffusion_steps,
+            schedule=self.diffusion_schedule,
+            num_classes=out_channels,
+        )
 
         self.model = GNNEncoder(
             n_layers=self.args.n_layers,
             hidden_dim=self.args.hidden_dim,
-            n_edges_features=self.args.n_edges_features,
-            n_nodes_features=self.args.n_nodes_features,
+            n_edges_features=self.args.edges_dim,
+            n_nodes_features=self.args.nodes_dim,
             n_out_features=out_channels,
             aggregation=self.args.aggregation,
             sparse=self.args.sparse_factor > 0,
